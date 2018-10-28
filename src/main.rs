@@ -63,20 +63,13 @@ pub fn main() {
                 let w3 = ((1000.0*(cx.powf(2.0) + cy.powf(2.0)+1.0)).sqrt()).sin();
 
                 let wf = w3 + w2 + w1 + w0;
-                //let wf = w3;
-                // let wf = w2;
-                // let wf = w1;
-                // let wf = w0;
 
-                //let r = 1.0 * 255.0 * wf;
-                //let g = 1.0 * 255.0 * wf;
-                //let b = 1.0 * 255.0 * wf;
                 let r = 0.8 * 255.0 * ((wf).sin() + 1.0)/2.0;
                 let g = 0.9 * 255.0 * ((wf+phase).sin() + 1.0)/2.0;
                 let b = 0.7 * 255.0 * ((2.0*wf).sin() + 1.0)/2.0;
+
                 let p = rgbpixel(r as u8, g as u8, b as u8);
 
-                // print!("{}", p);
                 vec.push(p);
             }
         }
@@ -85,7 +78,5 @@ pub fn main() {
         thread::sleep(delay);
 
     }
-    //let result = format!("{}{}{}{}{}{}",blue,block,hello,p,"WAT",rst);
-    // println!([blue, "Hello World!"].join("\n"));
 }
 
