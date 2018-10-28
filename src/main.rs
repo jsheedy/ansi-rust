@@ -1,4 +1,6 @@
 use std::{thread, time, f64};
+use std::time::{SystemTime, UNIX_EPOCH};
+
 extern crate termsize;
 
 
@@ -15,11 +17,19 @@ fn rgbpixel(r: u8, g: u8, b: u8) -> String {
     return result;
 }
 
-fn pixel(i: u8) -> String {
-    let esc = "\x1b[";
-    let block = String::from("█");
-    let result = format!("{}38;5;{}m{}",esc,i,block);
-    return result;
+//fn pixel(i: u8) -> String {
+    //let esc = "\x1b[";
+    //let block = String::from("█");
+    //let result = format!("{}38;5;{}m{}",esc,i,block);
+    //return result;
+//}
+
+fn t() -> f64 {
+    let start = SystemTime::now();
+    let since_the_epoch = start.duration_since(UNIX_EPOCH)
+        .expect("Time went backwards");
+    return since_the_epoch.as_secs() as f64 +
+            since_the_epoch.subsec_nanos() as f64 / 1_000_000_000.0;
 }
 
 pub fn main() {
@@ -37,41 +47,38 @@ pub fn main() {
     }
 
     let mv = home();
-    let modulus = 255;
 
-    let mut i = 0;
     loop {
         print!("{}", mv);
-        i += 1;
         let mut vec = Vec::new();
+        let phase = t() / 4.0;
         for row in 0..rows {
             for col in 0..cols {
-
-                let phase = i as f64 / 20.0;
 
                 let u = col as f64 / cols as f64;
                 let v = row as f64 / rows as f64;
 
-                let w0 = ((phase + 1.0 * 8.0 * f64::consts::PI * u).sin() + 1.0) / 2.0;
-                let w1 = ((phase + 1.0 * 12.0 * f64::consts::PI * v).sin() + 1.0) / 2.0;
+                let w0 = (phase + 1.0 * 8.0 * f64::consts::PI * u).sin();
+                let w1 = (phase + 1.0 * 12.0 * f64::consts::PI * (u+v)).sin();
+                let w2 = ((w0 + w1)+2.0*phase).sin();
 
-                let w2 = (((w0 + w1)+2.0*phase).sin() + 1.0) / 2.0;
                 //thx https://www.bidouille.org/prog/plasma
-                let cx = 0.5 * (u + ((phase/5.0).sin()+1.0)/2.0);
-                let cy = 0.5 * (v + ((phase/3.0).sin() + 1.0)/2.0);
-                let w3 = (200.0*(cx.powf(2.0) + cy.powf(2.0)+1.0)).sqrt() + 2.0*phase;
+                let cx = 1.0 * u + (phase/3.0 + 1.0).sin();
+                let cy = 1.0 * v + (phase/1.0).sin();
+                let w3 = ((1000.0*(cx.powf(2.0) + cy.powf(2.0)+1.0)).sqrt()).sin();
 
                 let wf = w3 + w2 + w1 + w0;
+                //let wf = w3;
                 // let wf = w2;
                 // let wf = w1;
                 // let wf = w0;
 
-                // let r = 1.0 * 255.0 * wf;
-                // let g = 1.0 * 255.0 * wf;
-                // let b = 1.0 * 255.0 * wf;
-                let r = 1.0 * 255.0 * ((wf * 1.0).sin() + 1.0)/2.0;
-                let g = 1.0 * 255.0 * ((wf * 5.0).sin() + 1.0)/2.0;
-                let b = 1.0 * 255.0 * ((wf * 10.0).sin() + 1.0)/2.0;
+                //let r = 1.0 * 255.0 * wf;
+                //let g = 1.0 * 255.0 * wf;
+                //let b = 1.0 * 255.0 * wf;
+                let r = 0.8 * 255.0 * ((wf).sin() + 1.0)/2.0;
+                let g = 0.9 * 255.0 * ((wf+phase).sin() + 1.0)/2.0;
+                let b = 0.7 * 255.0 * ((2.0*wf).sin() + 1.0)/2.0;
                 let p = rgbpixel(r as u8, g as u8, b as u8);
 
                 // print!("{}", p);
