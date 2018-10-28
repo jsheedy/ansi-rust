@@ -17,13 +17,6 @@ fn rgbpixel(r: u8, g: u8, b: u8) -> String {
     return result;
 }
 
-//fn pixel(i: u8) -> String {
-    //let esc = "\x1b[";
-    //let block = String::from("█");
-    //let result = format!("{}38;5;{}m{}",esc,i,block);
-    //return result;
-//}
-
 fn t() -> f64 {
     let start = SystemTime::now();
     let since_the_epoch = start.duration_since(UNIX_EPOCH)
@@ -32,12 +25,10 @@ fn t() -> f64 {
             since_the_epoch.subsec_nanos() as f64 / 1_000_000_000.0;
 }
 
-pub fn main() {
-
-    let mut rows = 20;
-    let mut cols = 20;
-
+fn size() -> (u16, u16) {
     let size = termsize::get();
+    let mut rows = 0;
+    let mut cols = 0;
     match size {
         Some(x) => {
             rows = x.rows;
@@ -45,8 +36,12 @@ pub fn main() {
         },
         None => println!("wat"),
     }
+    return (rows, cols);
+}
 
+pub fn main() {
     let mv = home();
+    let (rows, cols) = size();
 
     loop {
         print!("{}", mv);
