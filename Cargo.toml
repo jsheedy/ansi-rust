@@ -5,3 +5,5 @@ authors = ["Joseph Sheedy <joseph.sheedy@gmail.com>"]
 
 [dependencies]
 termsize = "0.1"
+image = "0.20.0"
+num-complex = "*"
