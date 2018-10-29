@@ -7,11 +7,8 @@ use std::time::{SystemTime, UNIX_EPOCH};
 use std::path::Path;
 
 use image::DynamicImage;
-use image::GenericImage;
-use image::Pixel;
 use image::GenericImageView;
 use num_complex::Complex;
-
 
 
 struct Color {
@@ -26,12 +23,13 @@ fn load_img(path: &str) -> DynamicImage {
 
 fn julia(u: f64, v: f64, phase: f64) -> Color {
 
+    let phase = phase * 0.5;
     // convert u,v 0,1 to -2,2
-    let scale = 0.1 + 1.0 * (((3.0*phase).sin()*(2.0*phase).cos())+1.0);
+    let scale = 0.2 + 0.4 * (((3.0*phase).sin()*(2.0*phase).cos())+1.0);
     let cy = 2.0 * scale * v - scale + 0.5*phase.sin();
     let cx = 2.0 * scale * u - scale + 0.5*phase.cos();
 
-    let max_iterations = 256;
+    let max_iterations = 127;
 
     let mut z = Complex::new(cx, cy);
     // 0.7885e^(ia)
@@ -150,17 +148,17 @@ pub fn main() {
                 let u = col as f64 / cols as f64;
                 let v = row as f64 / rows as f64;
 
-                // let color = julia(u, v, phase);
+                let color = julia(u, v, phase);
                 // let color = plasma(u, v, phase);
-                let color = img(u, v, phase, &velotron);
+                // let color = img(u, v, phase, &velotron);
 
                 let p = ansi_pixel(&color);
                 vec.push(p);
             }
         }
         print!("{}", vec.join(""));
-        let delay = time::Duration::from_millis(5);
-        thread::sleep(delay);
+        // let delay = time::Duration::from_millis(5);
+        // thread::sleep(delay);
     }
 }
 
