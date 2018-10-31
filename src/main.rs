@@ -10,6 +10,7 @@ use image::DynamicImage;
 use image::GenericImageView;
 use num_complex::Complex;
 
+mod sdl;
 
 struct Color {
     r: u8,
@@ -134,31 +135,31 @@ fn plasma(u: f64, v: f64, phase: f64) -> Color {
 }
 
 pub fn main() {
+
+    sdl::init();
+
     let mv = home();
     let (rows, cols) = size();
-
     let velotron = load_img("img/bike.jpg");
-    loop {
-        print!("{}", mv);
-        let mut vec = Vec::new();
-        let phase = t() / 4.0;
-        for row in 0..rows {
-            for col in 0..cols {
+    // loop {
+    //     print!("{}", mv);
+    //     let mut vec = Vec::new();
+    //     let phase = t() / 4.0;
+    //     for row in 0..rows {
+    //         for col in 0..cols {
 
-                let u = col as f64 / cols as f64;
-                let v = row as f64 / rows as f64;
+    //             let u = col as f64 / cols as f64;
+    //             let v = row as f64 / rows as f64;
 
-                let color = julia(u, v, phase);
-                // let color = plasma(u, v, phase);
-                // let color = img(u, v, phase, &velotron);
+    //             let color = julia(u, v, phase);
+    //             // let color = plasma(u, v, phase);
+    //             // let color = img(u, v, phase, &velotron);
 
-                let p = ansi_pixel(&color);
-                vec.push(p);
-            }
-        }
-        print!("{}", vec.join(""));
-        // let delay = time::Duration::from_millis(5);
-        // thread::sleep(delay);
-    }
+    //             let p = ansi_pixel(&color);
+    //             vec.push(p);
+    //         }
+    //     }
+    //     print!("{}", vec.join(""));
+    // }
 }
 
