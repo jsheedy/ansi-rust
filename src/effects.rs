@@ -63,7 +63,7 @@ fn img(u: f64, v: f64, phase: f64, img: &DynamicImage) -> Color {
     Color{r,g,b}
 }
 
-fn plasma(u: f64, v: f64, phase: f64) -> Color {
+pub fn plasma(u: f64, v: f64, phase: f64) -> Color {
     let w0 = (phase + 1.0 * 8.0 * f64::consts::PI * u).sin();
     let w1 = (phase + 1.0 * 12.0 * f64::consts::PI * (u+v)).sin();
     let w2 = ((w0 + w1)+2.0*phase).sin();
