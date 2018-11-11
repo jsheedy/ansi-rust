@@ -7,12 +7,9 @@ authors = ["Joseph Sheedy <joseph.sheedy@gmail.com>"]
 termsize = "0.1"
 image = "0.20.0"
 num-complex = "*"
-# sdl2 = "0.31"
-
 
 [dependencies.sdl2]
-git = "https://github.com/AngryLawyer/rust-sdl2"
-
-# version = "0.32"
+# git = "https://github.com/AngryLawyer/rust-sdl2"
+version = "*"
 # default-features = false
 # features = ["ttf","image","gfx","mixer"]
