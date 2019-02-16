@@ -2,15 +2,16 @@ extern crate termsize;
 extern crate image;
 extern crate num_complex;
 
-use std::{thread, time, f64};
+use std::{f64};
 
-mod color;
-mod effects;
-mod math;
-mod utils;
+use color;
+use effects;
+use utils;
+// mod color;
+// mod effects;
+// mod math;
+// mod utils;
 
-
-use std::{thread, time, f64};
 
 fn home() -> String {
     let esc = "\x1b[";
@@ -41,19 +42,20 @@ fn size() -> (u16, u16) {
 
 pub fn init() {
     let mv = home();
+
     let (rows, cols) = size();
     // let velotron = load_img("img/bike.jpg");
     loop {
         print!("{}", mv);
         let mut vec = Vec::new();
-        let phase = t() / 4.0;
+        let phase = utils::t() / 4.0;
         for row in 0..rows {
             for col in 0..cols {
 
                 let u = col as f64 / cols as f64;
                 let v = row as f64 / rows as f64;
 
-                let color = julia(u, v, phase);
+                let color = effects::julia(u, v, phase);
                 // let color = plasma(u, v, phase);
                 // let color = img(u, v, phase, &velotron);
 

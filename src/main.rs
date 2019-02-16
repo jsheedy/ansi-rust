@@ -2,8 +2,6 @@ extern crate termsize;
 extern crate image;
 extern crate num_complex;
 
-use std::{thread, time, f64};
-
 mod renderers;
 mod effects;
 mod color;
@@ -39,30 +37,8 @@ fn size() -> (u16, u16) {
 
 pub fn main() {
 
-    renderers::sdl::init();
+    renderers::terminal::init();
+    // renderers::sdl::init();
 
-    // let mv = home();
-    // let (rows, cols) = size();
-    // let velotron = load_img("img/bike.jpg");
-    // loop {
-    //     print!("{}", mv);
-    //     let mut vec = Vec::new();
-    //     let phase = t() / 4.0;
-    //     for row in 0..rows {
-    //         for col in 0..cols {
-
-    //             let u = col as f64 / cols as f64;
-    //             let v = row as f64 / rows as f64;
-
-    //             let color = julia(u, v, phase);
-    //             // let color = plasma(u, v, phase);
-    //             // let color = img(u, v, phase, &velotron);
-
-    //             let p = ansi_pixel(&color);
-    //             vec.push(p);
-    //         }
-    //     }
-    //     print!("{}", vec.join(""));
-    // }
 }
 

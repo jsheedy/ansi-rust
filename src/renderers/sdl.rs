@@ -3,14 +3,11 @@ extern crate sdl2;
 use renderers::sdl::sdl2::pixels::Color;
 use renderers::sdl::sdl2::event::Event;
 use renderers::sdl::sdl2::rect::Rect;
-use renderers::sdl::sdl2::rect::Point;
 
 use renderers::sdl::sdl2::keyboard::Keycode;
 use renderers::sdl::sdl2::gfx::primitives::DrawRenderer;
-use std::time::Duration;
 
 use utils;
-use math;
 use effects;
 
 pub fn init() {

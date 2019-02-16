@@ -1,4 +1,4 @@
-use std::{thread, time, f64};
+use std::{f64};
 use std::path::Path;
 
 use image::DynamicImage;
@@ -6,12 +6,12 @@ use image::GenericImageView;
 use num_complex::Complex;
 
 use color::{Color};
-use math::{sin, cos};
+use math::{sin};
 
 extern crate sdl2;
 
 
-fn julia(u: f64, v: f64, phase: f64) -> Color {
+pub fn julia(u: f64, v: f64, phase: f64) -> Color {
 
     let phase = phase * 0.5;
     // convert u,v 0,1 to -2,2
